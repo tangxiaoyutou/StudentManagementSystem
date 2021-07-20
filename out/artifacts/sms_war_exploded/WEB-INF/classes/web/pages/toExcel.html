@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导出excel实例</title>
+    <style type="text/css">
+        #table tbody tr td, th {
+            padding: 0;
+            margin: 0;
+            height: 40px;
+        }
+
+        #table tbody tr td input:not([type = date]) {
+            border: none;
+            text-align: center;
+            margin: 0;
+            height: 97%;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#search").click(function () {
+                $.getJSON("http://localhost:8080/sms/student", "action=searchClassScores&" + $("#searchForm").serialize(), function (dataList) {
+                    console.log(dataList);
+                    if (dataList.length === 0) {
+                        alert("查询无结果");
+                    } else {
+                        $("#table tbody").text("");
+                        for (let i = 0, len = dataList.length; i < len; i++) {
+                            $("#table tbody").append("<tr></tr>");
+                            $("#table tbody tr:last").append(
+                                "<td>" + (i + 1) + "</td>" +
+                                "<td>" + dataList[i].sn + "</td>" +
+                                "<td>" + dataList[i].name + "</td>" +
+                                "<td>" + dataList[i].totalScores + "</td > " +
+                                "<td>" + dataList[i].totalScores/4 + "</td>" +
+                                "<td>" + dataList[i].math + "</td>" +
+                                "<td>" + dataList[i].english + "</td>" +
+                                "<td>" + dataList[i].java + "</td>" +
+                                "<td>" + dataList[i].sports + "</td>"
+                            )
+                        }
+                    }
+                })
+            });
+            $("#export").click(function () {
+                let str = '排名,学号,姓名,总成绩,平均分,数学,英语,Java,体育,\n'
+                $("#table tbody").children("tr").each(function () {
+                    $(this).children("td").each(function () {
+                        str += $(this).text() + ','
+                    })
+                    str += '\n';
+                })
+                var blob = new Blob([str], {type: "text/plain;charset=utf-8"});
+                //解决中文乱码问题
+                blob =  new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+                object_url = window.URL.createObjectURL(blob);
+                var link = document.createElement("a");
+                link.href = object_url;
+                link.download =  "导出.csv";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+        });
+
+    </script>
+</head>
+<body>
+<div>
+    <form action="" id="searchForm">
+        年级
+        <select name="grade">
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19" selected>19</option>
+            <option value="20">20</option>
+        </select>
+        班级
+        <select name="stuClass">
+            <option value="01" selected>01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+        </select>
+        <button type="button" id="search">查询</button>
+    </form>
+</div>
+<div>
+    <table border="1" id="table" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <th>排名</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>总成绩</th>
+            <th>平均分</th>
+            <th>数学</th>
+            <th>英语</th>
+            <th>Java</th>
+            <th>体育</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+<div>
+    <button type="button" id="export">导出为excel</button>
+</div>
+</body>
+</html>

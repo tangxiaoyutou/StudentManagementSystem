@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改学生信息</title>
+    <style type="text/css">
+        #table tbody tr td,th{
+            padding: 0;
+            margin: 0;
+            height: 40px;
+        }
+        #table tbody tr td input:not([type = date]) {
+            border: none;
+            text-align: center;
+            margin: 0;
+            height: 97%;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#search").click(function () {
+                console.log($("#searchForm").serialize());
+                $.getJSON("http://localhost:8080/sms/student", "action=searchStudent&" + $("#searchForm").serialize(), function (dataList) {
+                    console.log(dataList);
+                    $(":input").val("");
+                    if (dataList.length === 0) {
+                        alert("查询无结果");
+                    } else {
+                        $("#table tbody").text("");
+                        for (let i = 0, len = dataList.length; i < len; i++) {
+                            $("#table tbody").append("<tr></tr>");
+                            $("#table tbody tr:last").append(
+                                "<th name ='sn'>" + dataList[i].sn + "</th>" +
+                                "<td>" + "<input name ='name' value='" + dataList[i].name + "'>" + "</td>" +
+                                "<td>" +
+                                "<select name='grade'>" +
+                                "<option value = '17' > 17 </option>" +
+                                "<option value = '18' > 18 </option>" +
+                                "<option value = '19' > 19 </option>" +
+                                "<option value = '20' > 20 </option>" +
+                                "</select>" + "</td > " +
+                                "<td name = 'stuClass'>" +
+                                "<select name='stuClass'>" +
+                                "<option value='01'>01</option>" +
+                                "<option value='02'>02</option>" +
+                                "<option value='03'>03</option>" +
+                                "</select>" + "</td>" +
+                                "<td name = 'sex' >" +
+                                "<select name='sex'>" +
+                                "<option value='男'>男</option>" +
+                                "<option value='女'>女</option>" +
+                                "</select>" + "</td>" +
+                                "<td name = 'birthday'>" +
+                                "<input type='date' name='birthday'>" + "</td>" +
+                                "<th>" + "<a href='#'>删除</a>" + "</th>"
+                            )
+
+                            const selectGrade = $("#table tbody tr:last select[name = 'grade']");
+                            selectGrade.children().each(function() {
+                                if($(this).attr("value") === dataList[i].grade){
+                                    $(this).attr("selected", true);
+                                }
+                            })
+                            const selectStuClass = $("#table tbody tr:last td select[name = 'stuClass']");
+                            selectStuClass.children().each(function () {
+                                if($(this).attr("value") === dataList[i].stuClass){
+                                    $(this).attr("selected", true);
+                                }
+                            })
+                            const birthday = $("#table tbody tr:last td input[type = 'date']");
+                            birthday.attr("value", dataList[i].birthday);
+                            const selectSex = $("#table tbody tr:last td select[name = 'sex']");
+                            selectSex.children().each(function () {
+                                if($(this).attr("value") === dataList[i].sex){
+                                    $(this).attr("selected", true);
+                                }
+                            })
+                        }
+
+                        $("#table tbody tr th a").click(function () {
+                            const nowTr = $(this).parent().parent();
+                            let sn = nowTr.find("th").eq(0).text();
+                            $.getJSON("http://localhost:8080/sms/student", "action=deleteStudent&sn=" + sn, function (data) {
+                                if(data.deleteResult === "删除成功") {
+                                    nowTr.remove();
+                                } else {
+                                    alert("删除失败");
+                                }
+                            })
+                        })
+                        $("#table tbody tr td input,select").change(function () {
+                            const nowTr = $(this).parent().parent();
+                            let sn = nowTr.find("th").eq(0).text();
+                            $.getJSON("http://localhost:8080/sms/student", "action=updateStudent&sn=" + sn + "&" + $(this).attr("name") + "=" + $(this).val(),function (data) {
+
+                            })
+                        })
+                        $("#table tbody tr td").attr("contenteditable", "true");
+                    }
+                })
+            })
+            $("#search").click();
+        })
+
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <form action="" id="searchForm">
+            学号 <input type="text" name="sn">
+            姓名 <input type="text" name="name">
+            <button type="button" id="search">搜索</button>
+        </form>
+    </div>
+    <div>
+        <table border="1" id="table" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>年级</th>
+                <th>班级</th>
+                <th>性别</th>
+                <th>生日</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

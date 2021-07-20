@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="text/html" charset="UTF-8"/>
+    <link rel="stylesheet" charset="utf-8" type="text/css" href="../css/iconfont.css"/>
+    <link rel="stylesheet" charset="utf-8" type="text/css" href="../css/ui.css"/>
+    <link rel="stylesheet" charset="utf-8" type="text/css" href="../css/common.css"/>
+    <link rel="stylesheet" charset="utf-8" type="text/css" href="../css/edu-bg-balck.css"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/EventDelegates.js"></script>
+    <title>学生成绩管理系统</title>
+</head>
+
+<style>
+
+</style>
+<body>
+<div class="edu-container edu-bg-balck">
+    <div class="edu-aside">
+        <header class="edu-header edu-logo">
+            <div style="height: 35px; width: 121px;"></div>
+        </header>
+        <!-- 侧边栏缩放 -->
+        <div class="lsm-expand-btn">
+            <div class="lsm-mini-btn">
+                <label>
+                    <input type="checkbox" checked style="display: none;">
+                    <i></i>
+                </label>
+            </div>
+        </div>
+        <section class="edu-sideMenu">
+            <ul id="accordion" class="accordion">
+                <li>
+
+                    <div class="link"><i class="iconfont icon-xitongguanli"></i>学生管理</div>
+                    <!--  二级菜单循环 -->
+                    <ul class="submenu">
+                        <li>
+                            <div class="link">
+                                学生管理<i class="iconfont icon-xiala"></i>
+                            </div>
+                            <ul class="submenu">
+                                <!--  三级菜单循环 -->
+                                <li class="item-file" data-code="NEW_XSD_WDZM" onclick="showMenuErji(this,'添加学生','3')"
+                                    data-code="NEW_XSD_WDZM" data-yjcode="NEW_XSD_WDZM" data-ejcode="NEW_XSD_WDZM_GGLY"
+                                    data-sjcode="NEW_XSD_WDZM_GGLY_YSGG" data-url="/ggly/ysgg_query">
+                                    <a href="#" id="NEW_XSD_WDZM_GGLY_YSGG"><b class="dot"></b>添加学生</a>
+                                </li>
+                                <li class="item-file" data-code="NEW_XSD_WDZM" onclick="showMenuErji(this,'添加学生成绩','3')"
+                                    data-code="NEW_XSD_WDZM" data-yjcode="NEW_XSD_WDZM" data-ejcode="NEW_XSD_WDZM_GGLY"
+                                    data-sjcode="NEW_XSD_WDZM_GGLY_YSLY" data-url="/ggly/ysly_query">
+                                    <a href="#" id="NEW_XSD_WDZM_GGLY_YSLY"><b class="dot"></b>添加学生成绩</a>
+                                </li>
+                                <li class="item-file" data-code="NEW_XSD_WDZM" onclick="showMenuErji(this,'消息通知','3')"
+                                    data-code="NEW_XSD_WDZM" data-yjcode="NEW_XSD_WDZM" data-ejcode="NEW_XSD_WDZM_GGLY"
+                                    data-sjcode="NEW_XSD_WDZM_GGLY_XXTZ" data-url="/ggly/xxtz_query">
+                                    <a href="#" id="NEW_XSD_WDZM_GGLY_XXTZ"><b class="dot"></b>消息通知</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <div class="edu-main">
+        <div class="edu-header edu-navBar">
+            <div class="breadcrumbs">
+                <ul>
+                    <li data-index="0">
+                        <a class="current"><span onclick="showTag('GRZX','',0,this)">个人中心</span> </a>
+                        <b></b>
+                    </li>
+                </ul>
+            </div>
+            <div class="navBar-right">
+                <div>
+                    <i class="icon-tab-left" id="scrollLeft"></i>
+                    <i class="icon-tab-right" id="scrollRight"></i>
+                </div>
+                <div style="">
+                    <div class="edu-badge item">
+                        <i class="icon-alarm" onclick="showMenuErji_menu('PTWH','/ggly/xxtz_query','消息通知',3)"></i>
+                        <sup class="edu-badge__content is-fixed"><span id="xtconuts">0</span></sup>
+                    </div>
+                </div>
+                <div class="edu-user">
+                    <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png">
+                    <div class="edu-menu">
+                        <div class="userInfo">
+                            <div>
+                                <p style="font-weight: 500;">唐湘豫</p>
+                                <span style="font-size: 12px;color:#888888">学生</span>
+                            </div>
+                        </div>
+                        <ul class="user-settings">
+                            <li onclick="showTag_1('GRZX','',0,this)">
+                                <i class="iconfont icongerenzhongxin"></i>
+                                <span>个人中心</span>
+                            </li>
+                            <li onclick="showMenuErji_menu('PTWH','/grsz/grsz_xgmm','修改密码',3)">
+                                <i class="iconfont iconxiugaimima"></i>
+                                <span>修改密码</span>
+                            </li>
+                            <li onclick="tcdl()">
+                                <i class="iconfont icontuichudenglu"></i>
+                                <span>退出登录</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="edu-center">
+            <div id="edu-cm">
+                <iframe id="Frame0" name="Frame0" src="../pages/addStudent.html?user="+ data-code=''></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<form id="Form1" name="Form1" enctype="multipart/form-data" action="" target="hideFrame" method="post">
+    <input type="hidden" id="method" name="method" value="exit">
+</form>
+<iframe id="hideFrame" name="hideFrame" style="width:0px;height:0px;display:none;"></iframe>
+<script type="text/javascript">
+
+    //IE11不支持收缩样式,暂时屏蔽
+    var u = window.navigator.userAgent.toLocaleLowerCase(),
+        ie11 = /(trident)\/([\d.]+)/,
+        b = u.match(ie11);
+    if (b) {
+        $(".lsm-expand-btn").remove();
+    }
+    //防止浏览器缓存收缩状态导致bug
+    $('.lsm-mini-btn input[type="checkbox"]').prop("checked", true);
+
+    //加载新tab菜单
+    function showMenuErji_menu(code, modpicurl, menuname, level) {
+
+        $("#edu-cm").find("iframe").hide();
+        var src = "";
+
+        src = "/jsxsd" + modpicurl;
+        //打开新的tab页，一级菜单暂不打开
+        $("#edu-cm").append("<iframe id='Frame" + frameIndex + "' name='Frame" + frameIndex + "' data-code='" + code + "' src='" + src + "' style='border: 0; margin: 0; width: 100%; height: 100%'></iframe>");
+        //var title = $("a", t).text();
+
+        var html = "<li data-index= '" + frameIndex + "'><a class=\"current\"><span   onclick=\"showTag('" + code + "','', '" + frameIndex + "', this)\">" + menuname + "</span><i class=\"iconfont icon-close01\" onclick=\"closeTag('" + code + "', '" + frameIndex + "', this)\"></i></a><b></b></li>";
+        $(".breadcrumbs > ul > li > a").removeClass("current");
+        $(".breadcrumbs > ul").append(html);
+        frameIndex++;
+        $("#scrollRight").click();
+    }
+
+
+    //显示tab页菜单
+    function showTag_1(code, sjcode, index, t) {
+        $("#edu-cm").find("iframe").hide();
+        $("#Frame" + index).show();
+        $(".breadcrumbs > ul > li > a").removeClass("current");
+        $("#grzx").addClass("current");
+
+        //收缩状态不联动左侧菜单
+        if ($('.edu-sideMenu').css('overflow-x') == 'hidden') {
+            return;
+        }
+
+        //联动左侧菜单
+        $("a.active").removeClass("active");
+        $("#" + sjcode).addClass("active");
+        $("ul.accordion > li").removeClass("open");
+        $("#" + sjcode).parents("li").addClass("open");
+        $("ul.submenu").css("display", "none");
+        $("#" + sjcode).parents("ul.submenu").css("display", "block");
+    }
+
+
+    var frameIndex = 1;
+
+    //加载新tab菜单
+    function showMenuErji(t, menuname, level) {
+
+        var code = $(t).data("code");
+        //隐藏原有iframe
+        $("#edu-cm").find("iframe").hide();
+
+        var src = "";
+
+        if (level == 3) {
+
+            src = "/jsxsd" + $(t).data("url");
+
+            var sjcode = $(t).data("sjcode");
+
+            //是否已经打开当前三级菜单
+            var sjspan = $("#span_" + sjcode);
+            if (sjspan.length > 0) {
+                //如果是当前菜单，则再次点击后刷新
+                if ($("#" + sjcode).hasClass("active")) {
+                    var index = $("#span_" + sjcode).attr("frameIndex");
+                    $("#Frame" + index).attr("src", $('#Frame' + index).attr("src"));
+                    $("#Frame" + index).show();
+                } else {
+                    sjspan.click();
+                }
+            } else {
+                //打开新的tab页，一级菜单暂不打开
+                $("#edu-cm").append("<iframe id='Frame" + frameIndex + "' name='Frame" + frameIndex + "' data-code='" + code + "' src='" + src + "' style='border: 0; margin: 0; width: 100%; height: 100%'></iframe>");
+
+                var html = "<li data-index= '" + frameIndex + "'><a class=\"current\"><span  id= 'span_" + sjcode + "' frameIndex='" + frameIndex + "' onclick=\"showTag('" + code + "','" + sjcode + "', '" + frameIndex + "', this)\">" + menuname + "</span><i class=\"iconfont icon-close01\" onclick=\"closeTag('" + code + "', '" + frameIndex + "', this)\"></i></a><b></b></li>";
+                $(".breadcrumbs > ul > li > a").removeClass("current");
+                $(".breadcrumbs > ul").append(html);
+
+                frameIndex++;
+                $("#scrollRight").click();
+            }
+
+            if (!$("#" + sjcode).hasClass("active")) {
+                //快捷菜单打开时需要联动左侧菜单
+                $("a.active").removeClass("active");
+                $("#" + sjcode).addClass("active");
+                $("ul.accordion > li").removeClass("open");
+                $("#" + sjcode).parents("li").addClass("open");
+                $("ul.submenu").css("display", "none");
+                $("#" + sjcode).parents("ul.submenu").css("display", "block");
+            }
+
+        }
+
+    }
+
+    //显示tab页菜单
+    function showTag(code, sjcode, index, t) {
+        $("#edu-cm").find("iframe").hide();
+        $("#Frame" + index).show();
+        $(".breadcrumbs > ul > li > a").removeClass("current");
+        $(t).parent("a").addClass("current");
+
+        //收缩状态不联动左侧菜单
+        if ($('.edu-sideMenu').css('overflow-x') == 'hidden') {
+            return;
+        }
+
+        //联动左侧菜单
+        $("a.active").removeClass("active");
+        $("#" + sjcode).addClass("active");
+        $("ul.accordion > li").removeClass("open");
+        $("#" + sjcode).parents("li").addClass("open");
+        $("ul.submenu").css("display", "none");
+        $("#" + sjcode).parents("ul.submenu").css("display", "block");
+
+
+    }
+
+    function closeTag(code, index, t) {
+        $("#Frame" + index).remove();
+
+        //当前页面关闭后要打开前一个tag
+        if ($(t).parent("a").hasClass("current")) {
+            //alert("当前："+$(t).parent("a").parent("li").data("index"));
+            var prevObj = $(t).parent("a").parent("li").prev("li");
+            //$("#Frame"+prevObj.data("index")).show();
+            //alert("上一个："+prevObj.data("index"));
+            showTag('', '', prevObj.data("index"), prevObj.find("a").find("span"));
+        }
+
+        $(t).parent("a").parent("li").remove();
+
+    }
+
+
+    $(".theme.theme-blue").click(function () {
+        $("#eduContainer").removeClass("edu-bg-balck");
+        fillResult('0');
+    });
+    $(".theme.theme-black").click(function () {
+        $("#eduContainer").addClass("edu-bg-balck");
+        fillResult('1');
+    });
+
+
+    function tcdl() {
+
+        window.Form1.action = "/jsxsd/xk/LoginToXk?method=exit";
+        window.Form1.target = "hideFrame";
+        window.Form1.submit();
+        window.Form1.action = "";
+        window.Form1.target = "";
+    }
+
+    //是否通过快速链接进入 1为是
+    var jumpFlag = "";
+    if ("1" == jumpFlag) {
+        showMenuErji_menu('', '', '', 3, '');
+    }
+
+    function showMenuErji_menu(code, modpicurl, menuname, level, codeej) {
+        if ("/ggly/xxtz_query" == modpicurl) {
+            $("#xtconuts").html('0');
+        }
+        $("#edu-cm").find("iframe").hide();
+        var src = "";
+        src = "/jsxsd" + modpicurl;
+        //打开新的tab页，一级菜单暂不打开
+        $("#edu-cm").append("<iframe id='Frame" + frameIndex + "' name='Frame" + frameIndex + "' data-code='" + code + "' src='" + src + "' style='border: 0; margin: 0; width: 100%; height: 100%'></iframe>");
+        var html = "<li data-index= '" + frameIndex + "'><a class=\"current\"><span  onclick=\"showTag('" + code + "','" + codeej + "', '" + frameIndex + "', this)\">" + menuname + "</span><i class=\"iconfont icon-close01\" onclick=\"closeTag('" + code + "', '" + frameIndex + "', this)\"></i></a><b></b></li>";
+        $(".breadcrumbs > ul > li > a").removeClass("current");
+        $(".breadcrumbs > ul").append(html);
+        frameIndex++;
+        $("#scrollRight").click();
+
+    }
+
+</script>
+</body>
+</html>

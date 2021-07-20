@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加学生成绩</title>
+    <style type="text/css">
+        #table tbody tr td, th {
+            padding: 0;
+            margin: 0;
+            height: 40px;
+        }
+
+        #table tbody tr td input:not([type = date]) {
+            border: none;
+            text-align: center;
+            margin: 0;
+            height: 97%;
+        }
+        .chart iframe{
+            width: 500px;
+            height: 400px;
+        }
+    </style>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#search").click(function () {
+                console.log($("#searchForm").serialize());
+                $.getJSON("http://localhost:8080/sms/student", "action=searchStudent&" + $("#searchForm").serialize(), function (dataList) {
+                    $(":input").val("");
+                    if (dataList.length === 0) {
+                        alert("查询无结果");
+                    } else {
+                        $("#table tbody").text("");
+                        for (let i = 0, len = dataList.length; i < len; i++) {
+                            $("#table tbody").append("<tr></tr>");
+                            $("#table tbody tr:last").append(
+                                "<th name ='sn'>" + dataList[i].sn + "</th>" +
+                                "<th name = 'name'>" + dataList[i].name + "</th>" +
+                                "<td>" + "<input name = 'math' type='number' value='" + dataList[i].math + "'>" + "</td>" +
+                                "<td>" + "<input name = 'english' type='number' value='" + dataList[i].english + "'>" + "</td>" +
+                                "<td>" + "<input name = 'java' type='number'  value='" + dataList[i].java + "'>" + "</td>" +
+                                "<td>" + "<input name = 'sports' type='number' value='" + dataList[i].sports + "'>" + "</td>" +
+                                "<th>" + "<a href='#' id = 'check'>查看</a>" + "</th>"
+                            )
+                            $("#table tbody tr:last th a").click(function () {
+                                const nowTr = $(this).parent().parent();
+                                let sn = nowTr.find("th").eq(0).text();
+                                let math = nowTr.find("input").eq(0).attr("value");
+                                let english = nowTr.find("input").eq(1).attr("value");
+                                let java = nowTr.find("input").eq(2).attr("value")
+                                let sports = nowTr.find("input").eq(3).attr("value");
+                                $("#chart iframe").attr("src", "../pages/chart.html?math=" + math +"&english=" + english + "&java=" + java + "&sports=" +sports );
+                            })
+
+                            $("#table tbody tr:last td input").change(function () {
+                                const nowTr = $(this).parent().parent();
+                                let sn = nowTr.find("th").eq(0).text();
+                                $this = $(this);
+                                $.getJSON("http://localhost:8080/sms/student", "action=updateStudent&sn=" + sn + "&" + $(this).attr("name") + "=" + $(this).val(), function (data) {
+                                    $this.attr("value",$this.val());
+                                })
+                            })
+                            $("#table tbody tr td").attr("contenteditable", "true");
+                        }
+                    }
+                })
+            })
+            $("#search").click();
+        })
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <form action="" id="searchForm">
+            学号 <input type="text" name="sn">
+            姓名 <input type="text" name="name">
+            <button type="button" id="search">搜索</button>
+        </form>
+    </div>
+    <div>
+        <table border="1" id="table" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>数学</th>
+                <th>英语</th>
+                <th>Java</th>
+                <th>体育</th>
+                <th>查看</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div id = "chart" class="chart">
+        <iframe></iframe>
+    </div>
+</div>
+</body>
+</html>

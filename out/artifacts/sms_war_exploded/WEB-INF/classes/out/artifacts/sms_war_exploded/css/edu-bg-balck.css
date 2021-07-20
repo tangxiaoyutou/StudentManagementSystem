@@ -1,0 +1,37 @@
+.edu-bg-balck .edu-logo{
+  background-color: transparent;
+}
+.edu-bg-balck .edu-logo>div{
+}
+.edu-bg-balck .accordion>li.open>.link{
+  background: #575B69;
+}
+.edu-bg-balck .edu-aside{
+  background: #454959;
+}
+.edu-bg-balck .accordion{
+  background: #454959;
+}
+.edu-bg-balck .accordion .link{
+  color: #bbb;
+}
+.edu-bg-balck .accordion>li>.link{
+  color: #94A4AE;
+}
+.edu-bg-balck .accordion .submenu{
+  background: #363947;
+  color: #BBBBBB;
+}
+.edu-bg-balck .submenu a{
+  color: #bbb;
+}
+.edu-bg-balck .submenu a:hover,.edu-bg-balck .submenu a.active{
+  color: #fff;
+}
+.edu-bg-balck .submenu a .dot{
+  background: #bbb
+}
+.edu-bg-balck .submenu a:hover .dot,
+.edu-bg-balck .submenu a.active .dot{
+  background: #fff;
+}
